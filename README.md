@@ -19,3 +19,6 @@
 - 4. In bar.html used url_for("name") so clicking on nav bar buttons send you to the correct path
 
 # Day 2 (7/10/2025)
+- 1. Made api keys
+- 2. calling from gemini api 
+- 3. updated requirements.txt
