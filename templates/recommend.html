@@ -1,6 +1,38 @@
 {% extends "bar.html" %}
 
 {% block content %}
-  <h1>Welcome to the Rec Page</h1>
-  <p>This is my custom rec content.</p>
+  <h1>Pick an Option to Explore:</h1>
+
+  <!-- Search Form -->
+  <form action="/recommend" method="POST">
+    <label for="content">Enter a title:</label>
+    <input type="text" id="content" name="content" required>
+
+    <br><br>
+    <input type="radio" id="tv" name="type" value="tv" checked>
+    <label for="tv">TV Show</label>
+
+    <input type="radio" id="movie" name="type" value="movie">
+    <label for="movie">Movie</label>
+
+    <br><br>
+    <button type="submit">Search</button>
+  </form>
+
+  {% if content %}
+    <h2>Top Matches:</h2>
+    {% for item in content %}
+    <div class="card">
+      <form method="POST" action="/add_liked">
+        <input type="hidden" name="title" value="{{ item['title'] or item['name'] }}">
+        <input type="hidden" name="image" value="{{ item['poster_path'] }}">
+        <input type="hidden" name="tmdb_id" value="{{ item['id'] }}">
+        <input type="hidden" name="media_type" value="{{ 'movie' if item.get('title') else 'tv' }}">
+        <button type="submit">Add to Liked</button>
+      </form>
+      <img src="https://image.tmdb.org/t/p/w200{{ item['poster_path'] }}" alt="{{ item['title'] or item['name'] }}" style="max-width: 200px; width: 100%;">
+      <h3>{{ item['title'] or item['name'] }}</h3>
+    </div>
+    {% endfor %}
+  {% endif %}
 {% endblock %}

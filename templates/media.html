@@ -1,6 +1,45 @@
 {% extends "bar.html" %}
 
 {% block content %}
-  <h1>Welcome to the Media Page</h1>
-  <p>This is my custom Media content.</p>
+  <h1 class="text-center">Your Favorites</h1>
+
+  <div class="container mt-4">
+    <h2>Movies</h2>
+    <div class="row">
+      {% for item in movies %}
+        <div class="col-md-3 mb-4">
+          <div class="card h-100 text-center p-2">
+            <img src="https://image.tmdb.org/t/p/w200{{ item[1] }}" alt="{{ item[2] }}" class="card-img-top mx-auto" style="max-width: 200px;">
+            <div class="card-body">
+              <h5 class="card-title">{{ item[2] }}</h5>
+              <form method="POST" action="/delete_liked">
+                <input type="hidden" name="tmdb_id" value="{{ item[3] }}">
+                <input type="hidden" name="media_type" value="movie">
+                <button type="submit" class="btn btn-danger mt-2">Delete from Favorites</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+    <h2>TV Shows</h2>
+    <div class="row">
+      {% for item in shows %}
+        <div class="col-md-3 mb-4">
+          <div class="card h-100 text-center p-2">
+            <img src="https://image.tmdb.org/t/p/w200{{ item[1] }}" alt="{{ item[2] }}" class="card-img-top mx-auto" style="max-width: 200px;">
+            <div class="card-body">
+              <h5 class="card-title">{{ item[2] }}</h5>
+              <form method="POST" action="/delete_liked">
+                <input type="hidden" name="tmdb_id" value="{{ item[3] }}">
+                <input type="hidden" name="media_type" value="tv">
+                <button type="submit" class="btn btn-danger mt-2">Delete from Favorites</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
 {% endblock %}
