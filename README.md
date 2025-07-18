@@ -21,3 +21,5 @@
 
 
 # Day 4 (7/17/2025)
+- 1. Implemented Gemini textbox to get user responses
+- 2. Function to query users favorites to give context to Gemini when recommending
