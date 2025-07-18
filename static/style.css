@@ -1,0 +1,15 @@
+body {
+  background-color: gray;
+}
+
+textarea {
+            width: 1000px;
+            height: 300px;
+            resize: both; /* Allows resizing in both horizontal and vertical directions */
+            overflow: auto; /* Adds scrollbars if content overflows after resizing */
+            border: 1px solid #1e85da;
+            padding: 5px;
+            font-size: 16px;
+            text-align: center;
+            background-color: beige;
+}

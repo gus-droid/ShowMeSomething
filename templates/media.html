@@ -1,6 +1,9 @@
 {% extends "bar.html" %}
 
 {% block content %}
+  <head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  </head>
   <h1 class="text-center">Your Favorites</h1>
 
   <div class="container mt-4">

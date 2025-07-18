@@ -1,6 +1,9 @@
 {% extends "bar.html" %}
 
 {% block content %}
+  <head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  </head>
   <h1>Pick an Option to Explore:</h1>
 
   <!-- Search Form -->

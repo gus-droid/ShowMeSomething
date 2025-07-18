@@ -1,6 +1,7 @@
 from flask import Flask, redirect, url_for, render_template, request
 from movie_api import search_tv_shows, search_movies
 from db.db_operations import *
+from gemini_api import generate_recommendation
 
 app = Flask(__name__)
 
@@ -8,9 +9,13 @@ app = Flask(__name__)
 def home():
     return render_template("home.html")
 
-@app.route("/chat")
+@app.route("/chat", methods=["GET", "POST"])
 def chat():
-    return render_template("chat.html")
+    response = ""
+    if request.method == "POST":
+        user_message = request.form.get("message")
+        response = generate_recommendation(user_message)
+    return render_template("chat.html", response=response)
 
 @app.route("/media")
 def media():
@@ -48,6 +53,7 @@ def add_liked():
 
     return redirect(url_for("recommend"))
 
+'''Logic to delete movie/show from table'''
 @app.route("/delete_liked", methods=["POST"])
 def delete_liked():
     tmdb_id = request.form.get("tmdb_id")

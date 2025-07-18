@@ -1,15 +1,36 @@
 import os
 from dotenv import load_dotenv
 from google import genai
+from google.genai import types
+import sqlite3
 
-# Load the key from the .env file
-load_dotenv()
-api_key = os.getenv("GEMINI_API_KEY")
+def get_user_favorites():
+    connection = sqlite3.connect("media.db")  # Add your DB path
+    cursor = connection.cursor()
 
-# The client gets the API key from the environment variable `GEMINI_API_KEY`.
-client = genai.Client()
+    cursor.execute("SELECT title FROM Movies")
+    movie_results = [row[0] for row in cursor.fetchall()]
 
-response = client.models.generate_content(
-    model="gemini-2.5-flash", contents="Explain how AI works in a few words"
-)
-print(response.text)
+    cursor.execute("SELECT title FROM Shows")
+    show_results = [row[0] for row in cursor.fetchall()]
+
+    connection.close()
+    return movie_results + show_results
+
+
+def generate_recommendation(user_message):
+    load_dotenv()
+    client = genai.Client()
+    
+    favorites = get_user_favorites()
+    context = f"User's favorite movies/shows: {', '.join(favorites)}. Based on these, respond to the user's prompt: '{user_message}'"
+
+    response = client.models.generate_content(
+        model="gemini-2.5-flash",
+        config=types.GenerateContentConfig(
+            system_instruction="You are a professional and kind movie/show recommender.",
+        ),
+        contents=context,
+    )
+
+    return response.text

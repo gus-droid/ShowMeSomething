@@ -1,6 +1,28 @@
 {% extends "bar.html" %}
 
 {% block content %}
-  <h1>Welcome to the Chat Page</h1>
-  <p>This is my custom Chat content.</p>
+  <head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  </head>
+
+  <h1 style="text-align: center;">Recommendations</h1>
+  <p style="text-align: center; font-weight: bold;">
+    Ask to be recommended movies, and we'll find the perfect movie or show for you based on your favorites!
+  </p>
+
+  <div style="text-align: center;">
+    <form method="POST" action="{{ url_for('chat') }}">
+      <label for="resizable-textarea">Type your message here:</label><br>
+      <textarea id="resizable-textarea" name="message" rows="5" cols="40" placeholder="Start typing..." required></textarea><br><br>
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+
+  {% if response %}
+    <div style="margin-top: 30px; text-align: center;">
+      <h2>Response:</h2>
+      <p>{{ response }}</p>
+    </div>
+  {% endif %}
 {% endblock %}
+
